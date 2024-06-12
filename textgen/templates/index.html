@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Simple Website</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="https://unpkg.com/htmx.org@1.5.0"></script>
+    <style>
+        .is-hidden {
+            display: none;
+        }
+        .skeleton-line {
+            height: 20px;
+            width: 80%;
+            margin: 10px 0;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+    </style>
+    <script>
+        document.getElementById("generate-button").addEventListener("click", function () {
+            document.getElementById("response").innerHTML = `
+                <div class="skeleton-line">
+                  <div></div>
+                  <div></div>
+                </div>
+            `;
+        });
+    </script>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-body">
+            <h1 class="title">Natural Language Processing</h1>
+            <p class="subtitle">
+                Build Language Model that predicts the next word
+            </p>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="field is-grouped">
+                <p class="control is-expanded">
+                    <input
+                        id="prompt"
+                        name="prompt"
+                        class="input"
+                        type="text"
+                        placeholder="Type some words..."
+                    />
+                </p>
+                <p class="control">
+                    <button
+                        id="generate-button"
+                        class="button is-info"
+                        hx-post="/api/generate/"
+                        hx-trigger="click"
+                        hx-target="#response"
+                        hx-include="[name=prompt]"
+                    >
+                        Generate
+                    </button>
+                </p>
+            </div>
+            <div id="response" class="content">
+                <!-- The generated text will be replaced by skeleton lines when waiting for response -->
+            </div>
+        </div>
+    </section>
+</body>
+</html>
